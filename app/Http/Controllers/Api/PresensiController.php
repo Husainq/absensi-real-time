@@ -26,7 +26,9 @@ class PresensiController extends Controller
         $earthRadius = 6371000;
         $dLat = deg2rad($lat - $this->officeLatitude);
         $dLng = deg2rad($lng - $this->officeLongitude);
-        $a = sin($dLat / 2) ** 2 + cos(deg2rad($this->officeLatitude)) * cos(deg2rad($lat)) * sin($dLng / 2) ** 2;
+        $a = sin($dLat / 2) ** 2 + cos(deg2rad(
+            $this->officeLatitude)) * cos(deg2rad($lat)) * 
+            sin($dLng / 2) ** 2;
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
         $distance = $earthRadius * $c;
 
@@ -95,7 +97,7 @@ class PresensiController extends Controller
         $sudahPresensiPulang = $presensi && $presensi->waktuPulang;
 
         $windowMasukStart = $waktuMasuk->copy()->subMinutes(120); // 2 jam sebelum masuk
-        $windowMasukEnd = $waktuMasuk->copy()->addMinutes(180);   // 3 jam 10 menit setelah masuk
+        $windowMasukEnd = $waktuMasuk->copy()->addMinutes(180);   // 3 jam setelah masuk
         $windowPulangStart = $waktuPulang;                        // mulai jam pulang
         $windowPulangEnd = $waktuPulang->copy()->addHours(6);     // maksimal 6 jam setelahnya
 
@@ -124,9 +126,11 @@ class PresensiController extends Controller
         // Tentukan pesan status
         if ($sudahPresensiPulang) {
             $message = 'Presensi pulang sudah diterima';
-        } elseif ($sudahPresensiMasuk && !$sudahPresensiPulang && $waktuSekarang->between($windowPulangStart, $windowPulangEnd)) {
+        } elseif ($sudahPresensiMasuk && !$sudahPresensiPulang && $waktuSekarang->
+            between($windowPulangStart, $windowPulangEnd)) {
             $message = 'Silakan presensi pulang';
-        } elseif ($sudahPresensiMasuk && !$sudahPresensiPulang && $waktuSekarang->gt($windowPulangEnd)) {
+        } elseif ($sudahPresensiMasuk && !$sudahPresensiPulang && $waktuSekarang->
+            gt($windowPulangEnd)) {
             $message = 'Presensi pulang sudah tutup, hubungi admin';
         } elseif ($bisaPresensiMasuk) {
             $message = 'Silakan presensi masuk';
@@ -269,7 +273,8 @@ class PresensiController extends Controller
             'waktuPulang' => Carbon::now('Asia/Jakarta'),
             'statusPulang' => 'Sudah Presensi Pulang',
             'imagePulang' => $path,
-            'lokasiPulang' => json_encode(['latitude' => $latitude, 'longitude' => $longitude]),
+            'lokasiPulang' => json_encode(['latitude' => $latitude, 
+            'longitude' => $longitude]),
         ]);
 
         return response()->json(['message' => 'Presensi pulang berhasil', 'data' => $presensi], 200);
