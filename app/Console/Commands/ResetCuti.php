@@ -20,7 +20,7 @@ class ResetCuti extends Command
      *
      * @var string
      */
-    protected $description = 'Mereset cuti tahunan dan cuti panjang berdasarkan aturan';
+    protected $description = 'Mereset jatah cuti dan memperpanjang masa expired (Tahunan +1 Tahun, Panjang +5 Tahun)';
 
     /**
      * Execute the console command.
@@ -29,25 +29,37 @@ class ResetCuti extends Command
      */
     public function handle()
     {
-        // Ambil semua data cuti yang ada
+        // Ambil semua data jatah cuti karyawan
         $cuti = Cuti::all();
+        $sekarang = Carbon::now();
 
         foreach ($cuti as $data) {
-            // Cek apakah cuti tahunan perlu direset
-            if (Carbon::parse($data->cutiTahun)->addYear()->isPast()) {
-                // Reset cuti tahunan jika sudah lebih dari 1 tahun
-                $data->cutiTahun = 12; // Misalnya cuti tahunan direset menjadi 12 hari
-                $data->save();
+            $adaPerubahan = false;
+
+            // 1. Cek Cuti Tahunan (Setiap 1 Tahun Sekali)
+            if ($data->expiredTahun && Carbon::parse($data->expiredTahun)->isPast()) {
+                $data->cutiTahun = 12; // Isi ulang jatah tahunan ke default
+                
+                // Perpanjang tanggal expired: Tambah 1 tahun dari tanggal expired sebelumnya
+                $data->expiredTahun = Carbon::parse($data->expiredTahun)->addYear(); 
+                $adaPerubahan = true;
             }
 
-            // Cek apakah cuti panjang perlu direset
-            if (Carbon::parse($data->expiredPanjang)->addYears(5)->isPast()) {
-                // Reset cuti panjang jika sudah lebih dari 5 tahun
-                $data->expiredPanjang = 0; // Reset cuti panjang menjadi 0
+            // 2. Cek Cuti Panjang (Setiap 5 Tahun Sekali)
+            if ($data->expiredPanjang && Carbon::parse($data->expiredPanjang)->isPast()) {
+                $data->cutiPanjang = 60; // Isi ulang jatah cuti panjang ke default
+                
+                // Perpanjang tanggal expired: Tambah 5 tahun dari tanggal expired sebelumnya
+                $data->expiredPanjang = Carbon::parse($data->expiredPanjang)->addYears(5); 
+                $adaPerubahan = true;
+            }
+
+            // Simpan ke database Supabase jika ada jatah yang mencapai hari H expired
+            if ($adaPerubahan) {
                 $data->save();
             }
         }
 
-        $this->info('Cuti tahunan dan cuti panjang berhasil direset.');
+        $this->info('✅ Pengecekan selesai. Jatah cuti yang expired berhasil di-reset dan diperpanjang periodenya.');
     }
 }

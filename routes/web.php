@@ -50,10 +50,10 @@ Route::get('/kelolashift', [KelolaShiftController::class,'index'])->name('web/ke
 Route::put('/kelolashift/{id}', [KelolaShiftController::class, 'update'])->name('web/kelola-shift-update');
 
 //Kelola Tabel Shift
-Route::get('/kelola-table-shift', [KelolaTableShift::class, 'index'])->name('shift.index');
-Route::put('/kelola-table-shift/{id}', [KelolaTableShift::class, 'update'])->name('shift.update');
-Route::post('/kelola-table-shift', [KelolaTableShift::class, 'store'])->name('shift.store');
-Route::delete('/kelola-table-shift/{id}', [KelolaTableShift::class, 'destroy'])->name('shift.destroy');
+Route::get('/kelola-table-shift', [KelolaTableShift::class, 'index'])->name('web/kelola-table-shift');
+Route::put('/kelola-table-shift/{id}', [KelolaTableShift::class, 'update'])->name('web/kelola-table-shift-update');
+Route::post('/kelola-table-shift', [KelolaTableShift::class, 'store'])->name('web/kelola-table-shift-store');
+Route::delete('/kelola-table-shift/{id}', [KelolaTableShift::class, 'destroy'])->name('web/kelola-table-shift-destroy');
 
 // Dashboard
 Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');

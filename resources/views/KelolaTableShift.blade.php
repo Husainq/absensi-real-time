@@ -155,7 +155,7 @@
         <!-- Modal Tambah Shift -->
         <dialog id="tambah-shift" class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 w-full max-w-lg">
             <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Tambah Shift Baru</h3>
-            <form id="form-tambah-shift" action="{{ route('shift.store') }}" method="POST">
+            <form id="form-tambah-shift" action="{{ route('web/kelola-table-shift-store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label class="block text-gray-700 dark:text-gray-200">Nama Shift</label>

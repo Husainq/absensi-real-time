@@ -81,8 +81,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('shift.index') }}"
-                    class="{{ request()->routeIs("shift.index") ? "active" : null }}">
+                <a href="{{ route('web/kelola-table-shift') }}"
+                    class="{{ request()->routeIs("web/kelola-table-shift") ? "active" : null }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-calendar-sync-icon lucide-calendar-sync">
