@@ -17,8 +17,10 @@ use Carbon\Carbon;
 class PresensiController extends Controller
 {
     // Koordinat lokasi kantor dan radius yang diperbolehkan (dalam meter)
-    private $officeLatitude = 0.5709752;
-    private $officeLongitude = 101.423522;
+    // private $officeLatitude = 0.5709752;
+    // private $officeLongitude = 101.423522;
+    private $officeLatitude = 1.270127;
+    private $officeLongitude = 101.1791285;
     private $radiusAllowed = 500;
 
     private function pengaturanLokasi($lat, $lng)
