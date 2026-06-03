@@ -99,7 +99,7 @@ class PresensiController extends Controller
         $sudahPresensiPulang = $presensi && $presensi->waktuPulang;
 
         $windowMasukStart = $waktuMasuk->copy()->subMinutes(120); // 2 jam sebelum masuk
-        $windowMasukEnd = $waktuMasuk->copy()->addMinutes(3600);   // 3 jam setelah masuk
+        $windowMasukEnd = $waktuMasuk->copy()->addMinutes(180);   // 3 jam setelah masuk
         $windowPulangStart = $waktuPulang;                        // mulai jam pulang
         $windowPulangEnd = $waktuPulang->copy()->addHours(6);     // maksimal 6 jam setelahnya
 
@@ -112,7 +112,7 @@ class PresensiController extends Controller
         }
 
         // Logging untuk debugging
-        \Log::info('Cek presensi:', [
+        Log::info('Cek presensi:', [
             'karyawan_id' => $karyawan_id,
             'waktuSekarang' => $waktuSekarang->toDateTimeString(),
             'windowMasukStart' => $windowMasukStart->toDateTimeString(),
