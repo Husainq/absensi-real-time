@@ -20,5 +20,3 @@ WORKDIR /var/www
 COPY . .
 
 RUN composer install --optimize-autoloader --no-interaction --no-scripts
-
-CMD php artisan serve --host=0.0.0.0 --port=8080
