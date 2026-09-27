@@ -20,3 +20,5 @@ WORKDIR /var/www
 COPY . .
 
 RUN composer install --optimize-autoloader --no-interaction --no-scripts
+
+CMD php -S 0.0.0.0:${PORT:-8080} -t public
